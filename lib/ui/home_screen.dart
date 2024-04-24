@@ -1,7 +1,33 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  void _onItemTapped(int index) {
+    if (index == 2) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Already Have Account?"),
+              content: const Text("Please Sign In"),
+              actions: [
+                TextButton(
+                  child: const Text("OK"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +104,8 @@ class HomeScreen extends StatelessWidget {
           onTap: () {},
         ),
         ListTile(
-          leading: Icon(Icons.dark_mode),
-          title: Text('Dark Mode'),
+          leading: const Icon(Icons.dark_mode),
+          title: const Text('Dark Mode'),
           onTap: () {},
         )
       ])),
@@ -87,12 +113,17 @@ class HomeScreen extends StatelessWidget {
         onPressed: () {},
         child: const Icon(Icons.add),
       ),
-      bottomNavigationBar: BottomNavigationBar(items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.play_circle), label: 'Play'),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.account_box), label: 'Account'),
-      ]),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: _onItemTapped,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.play_circle), label: 'Play'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_box),
+            label: 'Account',
+          ),
+        ],
+      ),
     );
   }
 }
